@@ -1,3 +1,5 @@
+{-# LANGUAGE LambdaCase #-}
+
 import Data.Char (isDigit)
 import Text.ParserCombinators.ReadP
 import Text.Printf (printf)
@@ -21,9 +23,11 @@ parseRotations :: ReadP [Rotation]
 parseRotations = sepBy parseRotation newline
 
 rotate :: Int -> Rotation -> Int
-rotate val (Rotation dir rot) = case dir of
-    L -> (val - rot) `mod` 100
-    R -> (val + rot) `mod` 100
+rotate val (Rotation dir rot) = val `op` rot `mod` 100
+  where
+    op = case dir of
+        L -> (-)
+        R -> (+)
 
 part1 :: [Rotation] -> Int
 part1 = length . filter (== 0) . scanl rotate 50
@@ -31,8 +35,7 @@ part1 = length . filter (== 0) . scanl rotate 50
 part2 :: [Rotation] -> Int
 part2 = part1 . concatMap step
   where
-    step (Rotation L n) = replicate n (Rotation L 1)
-    step (Rotation R n) = replicate n (Rotation R 1)
+    step (Rotation dir n) = replicate n (Rotation dir 1)
 
 main :: IO ()
 main = do
