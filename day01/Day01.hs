@@ -15,10 +15,7 @@ parseDirection :: ReadP Direction
 parseDirection = (char 'L' >> return L) +++ (char 'R' >> return R)
 
 parseRotation :: ReadP Rotation
-parseRotation = do
-    dir <- parseDirection
-    dist <- parseInt
-    return $ Rotation dir dist
+parseRotation = Rotation <$> parseDirection <*> parseInt
 
 parseRotations :: ReadP [Rotation]
 parseRotations = sepBy parseRotation newline
@@ -32,7 +29,7 @@ part1 :: [Rotation] -> Int
 part1 = length . filter (== 0) . scanl rotate 50
 
 part2 :: [Rotation] -> Int
-part2 = part1 . concat . map step
+part2 = part1 . concatMap step
   where
     step (Rotation L n) = replicate n (Rotation L 1)
     step (Rotation R n) = replicate n (Rotation R 1)
