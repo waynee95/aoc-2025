@@ -1,5 +1,3 @@
-{-# LANGUAGE LambdaCase #-}
-
 import Data.Char (isDigit)
 import Text.ParserCombinators.ReadP
 import Text.Printf (printf)
