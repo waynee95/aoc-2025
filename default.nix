@@ -1,4 +1,9 @@
 { pkgs ? import <nixpkgs> {} }:
   pkgs.mkShell {
-    buildInputs = with pkgs.buildPackages; [ ghc haskellPackages.hlint haskellPackages.fourmolu ];
+    buildInputs = with pkgs.buildPackages; [
+      ghc
+      haskell-language-server
+      haskellPackages.hlint
+      haskellPackages.fourmolu
+    ];
 }
