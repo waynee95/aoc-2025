@@ -40,4 +40,4 @@ main = do
     printf "Part 2: %d\n" (part2 input)
 
 -- Part 1: 17445
--- Part 2:
+-- Part 2: 3121910778619
